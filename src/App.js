@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Slider from "./Slider";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  render() {
+    const cardsData = [
+      {
+        src: 'https://picsum.photos/id/100/100/100',
+        title: 'Card 0',
+        text: 'Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.',
+      },
+      {
+        src: 'https://picsum.photos/id/100/100/100',
+        title: 'Card 1',
+        text: 'Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.',
+      },
+      {
+        src: 'https://picsum.photos/id/100/100/100',
+        title: 'Card 2',
+        text: 'Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.',
+      },
+      {
+        src: 'https://picsum.photos/id/100/100/100',
+        title: 'Card 3',
+        text: 'Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.',
+      },
+      {
+        src: 'https://picsum.photos/id/100/100/100',
+        title: 'Card 4',
+        text: 'Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.',
+      }
+    ];
+
+    return (
+      <div className="w-full min-w-fit h-screen flex justify-center items-center">
+        <Slider cardsData={cardsData} />
+      </div>
+    )
+  }
 }
 
 export default App;
