@@ -1,4 +1,21 @@
 import React, { Component } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+
+const SliderNavigationController = () =>{
+    return (
+        <div>
+            <button type="button" className="mb-2 px-5 py-2.5 rounded-full text-4xl font-medium text-gray-600 absolute top-1/2 left-[270px] translate-x-0 -translate-y-1/2 disabled:shadow-none disabled:text-gray-600 hover:shadow-2xl hover:transition-all active:shadow-inner focus:text-black">
+                <FontAwesomeIcon icon={faArrowLeft} />
+            </button>
+            <button type="button" className="mb-2 px-5 py-2.5 rounded-full text-4xl font-medium text-gray-600 absolute top-1/2 right-[270px] translate-x-0 -translate-y-1/2 disabled:shadow-none disabled:text-gray-600 hover:shadow-2xl hover:transition-all active:shadow-inner focus:text-black">
+                <i className="fa-solid fa-arrow-right-long"></i>
+                <FontAwesomeIcon icon={faArrowRight} />
+            </button>
+        </div>
+    )
+};
 
 class Slider extends Component{
     render() {
@@ -25,6 +42,7 @@ class Slider extends Component{
                 <ul className="w-fit mb-12 flex">
                     {cards}
                 </ul>
+                <SliderNavigationController />
             </div>
         )
     }
