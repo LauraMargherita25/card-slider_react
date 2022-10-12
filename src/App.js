@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Slider from "./Slider";
+import Slider from "./SliderComponent";
 
 class App extends Component {
 
@@ -32,9 +32,13 @@ class App extends Component {
       }
     ];
 
+    const handleNewCard = (card) => {
+      cardsData.push(card)
+    }
+
     return (
       <div className="w-full min-w-fit h-screen flex justify-center items-center">
-        <Slider cardsData={cardsData} />
+        <Slider cardsData={cardsData} handleNewCard={handleNewCard}/>
       </div>
     )
   }
