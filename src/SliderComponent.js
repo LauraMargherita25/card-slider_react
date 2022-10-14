@@ -24,12 +24,11 @@ const SliderCommandPalette = (props) => {
         props.addCard(newCards)
     }
 
-    const initialColor = "#ffedd5"
-    let backgroundColor = initialColor
+    let backgroundColor = props.backgroundColor
     const changeBackgroundColor = (event) => {
-        backgroundColor = event.target.value
-        props.handleNewBackgroundColor(backgroundColor)
-        console.log(backgroundColor, event.target)
+        // backgroundColor = event.target.value
+        props.handleNewBackgroundColor(event.target.value)
+        console.log(backgroundColor)
     }
 
     return (
@@ -155,12 +154,12 @@ class SliderComponent extends Component{
     }
 
     render() {
-        const { handleNewBackgroundColor } = this.props
+        const { backgroundColor,handleNewBackgroundColor } = this.props
         const { cardsData,arrMinSize,arrMaxSize } = this.state;
 
         return (
             <div className="relative">
-                <SliderCommandPalette addCard={this.addCard} handleNewBackgroundColor={handleNewBackgroundColor}/>
+                <SliderCommandPalette addCard={this.addCard} backgroundColor={backgroundColor} handleNewBackgroundColor={handleNewBackgroundColor}/>
                 <SliderSection cardsData={cardsData} arrMinSize={arrMinSize} arrMaxSize={arrMaxSize} />
                 <SliderNavigationController prev={this.prev} next={this.next} arrMinSize={arrMinSize} arrMaxSize={arrMaxSize} getArrayLimit={this.getArrayLimit} />
                 {/* <SliderPaginationController getArrayLimit={this.getArrayLimit} /> */}

@@ -17,7 +17,7 @@ class App extends Component {
         return(
             <div className="w-full min-w-fit h-screen flex justify-center items-center" style={{ backgroundColor: this.state.backgroundColor}}>
 
-                <SliderComponent handleNewBackgroundColor={this.handleNewBackgroundColor}/>
+                <SliderComponent backgroundColor={this.state.backgroundColor} handleNewBackgroundColor={this.handleNewBackgroundColor}/>
 
             </div>
         )
