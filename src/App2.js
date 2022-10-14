@@ -3,11 +3,21 @@ import SliderComponent from "./SliderComponent";
 
 
 class App extends Component {
+    state = {
+        backgroundColor: "#ffedd5"
+    }
+
+    handleNewBackgroundColor = (newColor) => {
+        this.setState({
+            backgroundColor: newColor
+        })
+    }
+
     render() {
         return(
-            <div className="w-full min-w-fit h-screen flex justify-center items-center">
+            <div className="w-full min-w-fit h-screen flex justify-center items-center" style={{ backgroundColor: this.state.backgroundColor}}>
 
-                <SliderComponent />
+                <SliderComponent handleNewBackgroundColor={this.handleNewBackgroundColor}/>
 
             </div>
         )

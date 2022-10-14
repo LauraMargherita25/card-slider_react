@@ -24,14 +24,29 @@ const SliderCommandPalette = (props) => {
         props.addCard(newCards)
     }
 
+    const initialColor = "#ffedd5"
+    let backgroundColor = initialColor
+    const changeBackgroundColor = (event) => {
+        backgroundColor = event.target.value
+        props.handleNewBackgroundColor(backgroundColor)
+        console.log(backgroundColor, event.target)
+    }
+
     return (
         <nav className="w-3/4 mx-auto mb-12 flex justify-evenly items-center">
             <h1 className="text-6xl">Section Cards</h1>
             
-            <div className="w-1/8">
-                <label htmlFor="small-range" className="mb-2 text-sm font-medium text-gray-900 block">Number of Cards:{rangeValue}</label>
-                <input id="small-range" type="range" defaultValue={rangeValue} min="1" max="10" className="h-1 border-none rounded-lg text-black bg-zinc-300 appearance-none cursor-pointer" onChange={handleChange}/>
-            </div>
+            <form>
+                <div className="w-1/8">
+                    <label htmlFor="small-range" className="mb-2 text-sm font-medium text-gray-900 block">Number of Cards:{rangeValue}</label>
+                    <input id="small-range" type="range" defaultValue={rangeValue} min="1" max="10" className="h-1 border-none rounded-lg text-black bg-zinc-300 appearance-none cursor-pointer" onChange={handleChange}/>
+                </div>
+
+                <div className="flex items-center">
+                    <label htmlFor="color">Background color: </label>
+                    <input type="color" id="color" name="color" defaultValue={backgroundColor} className="w-12 h-8 m-2 border-2 border-solid border-white rounded-full cursor-pointer" onChange={changeBackgroundColor}/> 
+                </div>
+            </form>
         </nav>
     )
 };
@@ -140,11 +155,12 @@ class SliderComponent extends Component{
     }
 
     render() {
+        const { handleNewBackgroundColor } = this.props
         const { cardsData,arrMinSize,arrMaxSize } = this.state;
 
         return (
             <div className="relative">
-                <SliderCommandPalette addCard={this.addCard}/>
+                <SliderCommandPalette addCard={this.addCard} handleNewBackgroundColor={handleNewBackgroundColor}/>
                 <SliderSection cardsData={cardsData} arrMinSize={arrMinSize} arrMaxSize={arrMaxSize} />
                 <SliderNavigationController prev={this.prev} next={this.next} arrMinSize={arrMinSize} arrMaxSize={arrMaxSize} getArrayLimit={this.getArrayLimit} />
                 {/* <SliderPaginationController getArrayLimit={this.getArrayLimit} /> */}
