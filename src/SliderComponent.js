@@ -3,15 +3,64 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
-const SliderCommandPalette = (props) => {
+// const SliderCommandPalette = (props) => {
 
-    let rangeValue = 1
+//     let rangeValue = 1
 
-    let newCards = []
+//     let newCards = []
 
-    const handleChange = (event) => {
-        const { value } = event.target
-        rangeValue = value
+//     const handleChange = (event) => {
+//         const { value } = event.target
+//         rangeValue = value
+//         let y = 100
+//         for (let i = 0; i < value; i++) {
+//             const newCard = {
+//                 src: 'https://picsum.photos/id/'+ y++ +'/100/100',
+//                 title: 'Card ' + (i + 1),
+//                 text: 'Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.',
+//             }
+//             newCards.push(newCard)
+//         }
+//         props.addCard(newCards)
+//     }
+
+//     let backgroundColor = props.backgroundColor
+//     const changeBackgroundColor = (event) => {
+//         props.handleNewBackgroundColor(event.target.value)
+//     }
+
+//     return (
+//         <nav className="w-3/4 mx-auto mb-12 flex justify-evenly items-center">
+//             <h1 className="text-6xl">Section Cards</h1>
+            
+            
+//             <div className="w-1/8">
+//                 <label htmlFor="small-range" className="mb-2 text-sm font-medium text-gray-900 block">Number of Cards:{rangeValue}</label>
+//                 <input id="small-range" type="range" defaultValue={rangeValue} min="1" max="10" className="h-1 border-none rounded-lg text-black bg-zinc-300 appearance-none cursor-pointer" onChange={handleChange}/>
+//             </div>
+
+//             <div className="flex items-center">
+//                 <label htmlFor="color">Background color: </label>
+//                 <input type="color" id="color" name="color" value={backgroundColor} className="w-12 h-8 m-2 border-2 border-solid border-white rounded-full cursor-pointer" onChange={changeBackgroundColor}/> 
+//             </div>
+            
+//         </nav>
+//     )
+// };
+
+class SliderCommandPalette extends Component {
+    initialValue = 1;
+    state = {
+        rangeValue: this.initialValue
+    }
+    handleChange = (event) => {
+        const value = event.target.value;
+
+        this.setState({
+            rangeValue: value, 
+        })
+
+        let newCards = []
         let y = 100
         for (let i = 0; i < value; i++) {
             const newCard = {
@@ -21,31 +70,37 @@ const SliderCommandPalette = (props) => {
             }
             newCards.push(newCard)
         }
-        props.addCard(newCards)
+        this.props.addCard(newCards)
     }
 
-    let backgroundColor = props.backgroundColor
-    const changeBackgroundColor = (event) => {
-        props.handleNewBackgroundColor(event.target.value)
+    changeBackgroundColor = (event) => {
+        this.props.handleNewBackgroundColor(event.target.value)
     }
+    render() {
+        return(
 
-    return (
-        <nav className="w-3/4 mx-auto mb-12 flex justify-evenly items-center">
-            <h1 className="text-6xl">Section Cards</h1>
-            
-            <div className="w-1/8">
-                <label htmlFor="small-range" className="mb-2 text-sm font-medium text-gray-900 block">Number of Cards:{rangeValue}</label>
-                <input id="small-range" type="range" defaultValue={rangeValue} min="1" max="10" className="h-1 border-none rounded-lg text-black bg-zinc-300 appearance-none cursor-pointer" onChange={handleChange}/>
-            </div>
+            <nav className="w-3/4 mx-auto mb-12 flex justify-evenly items-center">
+                <h1 className="text-6xl">Section Cards</h1>
 
-            <div className="flex items-center">
-                <label htmlFor="color">Background color: </label>
-                <input type="color" id="color" name="color" value={backgroundColor} className="w-12 h-8 m-2 border-2 border-solid border-white rounded-full cursor-pointer" onChange={changeBackgroundColor}/> 
-            </div>
-            
-        </nav>
-    )
-};
+                <div>
+                    <label htmlFor="small-range" className="mb-2 text-sm font-medium text-gray-900 block">Number of Cards:{this.state.rangeValue}</label>
+                    <input id="small-range" type="range" value={this.state.rangeValue} min="1" max="10" className="h-1 border-none rounded-lg text-black bg-zinc-300 appearance-none cursor-pointer" onChange={this.handleChange}/>
+                </div>
+
+                {/* <div className="w-1/8">
+                    <label htmlFor="small-range" className="mb-2 text-sm font-medium text-gray-900 block">Number of Cards:{rangeValue}</label>
+                    <input id="small-range" type="range" defaultValue={rangeValue} min="1" max="10" className="h-1 border-none rounded-lg text-black bg-zinc-300 appearance-none cursor-pointer" onChange={handleChange}/>
+                </div> */}
+
+                <div className="flex items-center">
+                    <label htmlFor="color">Background color: </label>
+                    <input type="color" id="color" name="color" value={this.props.backgroundColor} className="w-12 h-8 m-2 border-2 border-solid border-white rounded-full cursor-pointer" onChange={this.changeBackgroundColor}/> 
+                </div>
+
+            </nav>
+        )
+    }
+}
 
 const SliderSection = (props) => {
 
