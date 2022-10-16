@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
+// Prima versione di SliderCommandPalette function-component con lebel dinamico non funzionante
 // const SliderCommandPalette = (props) => {
 
 //     let rangeValue = 1
@@ -48,7 +49,10 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 //     )
 // };
 
+// Sconda versione di SliderCommandPalette class-component con lebel dinamico funzionante
 class SliderCommandPalette extends Component {
+
+    // Funzione per inserimento di nuove carte in base alla value di input range
     initialValue = 1;
     state = {
         rangeValue: this.initialValue
@@ -73,6 +77,7 @@ class SliderCommandPalette extends Component {
         this.props.addCard(newCards)
     }
 
+    // Funzione per cambiare il colore dello sfondo
     changeBackgroundColor = (event) => {
         this.props.handleNewBackgroundColor(event.target.value)
     }
@@ -82,16 +87,13 @@ class SliderCommandPalette extends Component {
             <nav className="w-3/4 mx-auto mb-12 flex justify-evenly items-center">
                 <h1 className="text-6xl">Section Cards</h1>
 
+                {/* Input Range per inserimento di nuove cards */}
                 <div>
                     <label htmlFor="small-range" className="mb-2 text-sm font-medium text-gray-900 block">Number of Cards:{this.state.rangeValue}</label>
                     <input id="small-range" type="range" value={this.state.rangeValue} min="1" max="10" className="h-1 border-none rounded-lg text-black bg-zinc-300 appearance-none cursor-pointer" onChange={this.handleChange}/>
                 </div>
 
-                {/* <div className="w-1/8">
-                    <label htmlFor="small-range" className="mb-2 text-sm font-medium text-gray-900 block">Number of Cards:{rangeValue}</label>
-                    <input id="small-range" type="range" defaultValue={rangeValue} min="1" max="10" className="h-1 border-none rounded-lg text-black bg-zinc-300 appearance-none cursor-pointer" onChange={handleChange}/>
-                </div> */}
-
+                {/* Input color per impostare colore background */}
                 <div className="flex items-center">
                     <label htmlFor="color">Background color: </label>
                     <input type="color" id="color" name="color" value={this.props.backgroundColor} className="w-12 h-8 m-2 border-2 border-solid border-white rounded-full cursor-pointer" onChange={this.changeBackgroundColor}/> 
@@ -177,6 +179,7 @@ class SliderComponent extends Component{
         arrMaxSize: 5,
     };
 
+    // Funzionamento dei navigation btn
     prev = () => {
         this.setState({arrMinSize: this.state.arrMinSize - 1, arrMaxSize: this.state.arrMaxSize - 1 })
     };
@@ -189,15 +192,17 @@ class SliderComponent extends Component{
         return this.state.cardsData.length;
     };
 
+    // Array delle cinque carte da visualizzare
     getActiveArray = () => {
         return this.state.cardsData.slice(this.state.arrMinSize, this.state.arrMaxSize)
     };
 
+    // Array delle cinque carte da visualizzare in base al pagination btn selezionato
     setActiveArray = (index) => {
         this.setState({arrMinSize: index - 2, arrMaxSize: index + 3 })
     }
 
-
+    // Funzione per aggiunta cards in base al numero di cards inserito in input range
     addCard = (newCards) => {
         this.setState({
             cardsData: [...this.state.cardsData.slice(0, 2), ...newCards, ...this.state.cardsData.slice(this.getArrayLimit() - 2)]
