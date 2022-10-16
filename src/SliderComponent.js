@@ -26,39 +26,32 @@ const SliderCommandPalette = (props) => {
 
     let backgroundColor = props.backgroundColor
     const changeBackgroundColor = (event) => {
-        // backgroundColor = event.target.value
         props.handleNewBackgroundColor(event.target.value)
-        console.log(backgroundColor)
     }
 
     return (
         <nav className="w-3/4 mx-auto mb-12 flex justify-evenly items-center">
             <h1 className="text-6xl">Section Cards</h1>
             
-            <form>
-                <div className="w-1/8">
-                    <label htmlFor="small-range" className="mb-2 text-sm font-medium text-gray-900 block">Number of Cards:{rangeValue}</label>
-                    <input id="small-range" type="range" defaultValue={rangeValue} min="1" max="10" className="h-1 border-none rounded-lg text-black bg-zinc-300 appearance-none cursor-pointer" onChange={handleChange}/>
-                </div>
+            <div className="w-1/8">
+                <label htmlFor="small-range" className="mb-2 text-sm font-medium text-gray-900 block">Number of Cards:{rangeValue}</label>
+                <input id="small-range" type="range" defaultValue={rangeValue} min="1" max="10" className="h-1 border-none rounded-lg text-black bg-zinc-300 appearance-none cursor-pointer" onChange={handleChange}/>
+            </div>
 
-                <div className="flex items-center">
-                    <label htmlFor="color">Background color: </label>
-                    <input type="color" id="color" name="color" defaultValue={backgroundColor} className="w-12 h-8 m-2 border-2 border-solid border-white rounded-full cursor-pointer" onChange={changeBackgroundColor}/> 
-                </div>
-            </form>
+            <div className="flex items-center">
+                <label htmlFor="color">Background color: </label>
+                <input type="color" id="color" name="color" value={backgroundColor} className="w-12 h-8 m-2 border-2 border-solid border-white rounded-full cursor-pointer" onChange={changeBackgroundColor}/> 
+            </div>
+            
         </nav>
     )
 };
 
 const SliderSection = (props) => {
 
-    let getActiveArray = () => {
-        return props.cardsData.slice(props.arrMinSize, props.arrMaxSize)
-    };
-
-    const cards = getActiveArray().map((card, index) => {
+    const cards = props.getActiveArray().map((card, index) => {
         return (
-            <li key={index} className="w-[280px] h-[400px] mx-8 rounded-[25px] bg-white inline-block overflow-hidden shadow-xl first-of-type:opacity-50 last-of-type:opacity-50">
+            <li key={index} className={`w-[280px] h-[400px] mx-8 rounded-[25px] bg-white inline-block overflow-hidden shadow-xl first-of-type:opacity-50 last-of-type:opacity-50 ${Object.keys(card).length === 0 ? 'invisible' : ''}`}>
                 <div>
                     <img src={card.src} alt=""  className="rounded-full mx-auto my-9"/>
                 </div>
@@ -94,21 +87,22 @@ const SliderNavigationController = (props) => {
     )
 };
 
-// const SliderPaginationController = (props) => {
-//     const indicators = props.getArrayLimit().map((indicator, index) => {
-//         return (    
-//             <li class="inline mr-3">
-//                 <button className="w-3 h-3 rounded-full bg-zinc-300 hover:w-5 hover:h-5 hover:transition-all active:w-2 active:h-2"></button>
-//             </li>
-//         )
-//     })
+const SliderPaginationController = (props) => {
 
-//     return (
-//         <ul class="flex justify-center items-center h-28">
-//             {indicators}
-//         </ul>
-//     )
-// };
+    const indicators = props.cardsData.map((indicator, index) => {
+        return (    
+            <li className="inline mr-3" key={index}>
+                <button className={`w-3 h-3 rounded-full hover:w-5 hover:h-5 hover:transition-all active:w-2 active:h-2 ${Object.keys(indicator).length === 0 ? 'hidden' : ''} ${indicator === props.getActiveArray()[2] ? 'bg-zinc-700' : 'bg-zinc-300'}`} onClick={() => {props.setActiveArray(index)}}></button>
+            </li>
+        )
+    })
+
+    return (
+        <ul className="flex justify-center items-center h-28">
+            {indicators}
+        </ul>
+    )
+};
 
 class SliderComponent extends Component{
     state = {
@@ -140,6 +134,15 @@ class SliderComponent extends Component{
         return this.state.cardsData.length;
     };
 
+    getActiveArray = () => {
+        return this.state.cardsData.slice(this.state.arrMinSize, this.state.arrMaxSize)
+    };
+
+    setActiveArray = (index) => {
+        this.setState({arrMinSize: index - 2, arrMaxSize: index + 3 })
+    }
+
+
     addCard = (newCards) => {
         this.setState({
             cardsData: [...this.state.cardsData.slice(0, 2), ...newCards, ...this.state.cardsData.slice(this.getArrayLimit() - 2)]
@@ -160,9 +163,9 @@ class SliderComponent extends Component{
         return (
             <div className="relative">
                 <SliderCommandPalette addCard={this.addCard} backgroundColor={backgroundColor} handleNewBackgroundColor={handleNewBackgroundColor}/>
-                <SliderSection cardsData={cardsData} arrMinSize={arrMinSize} arrMaxSize={arrMaxSize} />
+                <SliderSection getActiveArray={this.getActiveArray} /> 
                 <SliderNavigationController prev={this.prev} next={this.next} arrMinSize={arrMinSize} arrMaxSize={arrMaxSize} getArrayLimit={this.getArrayLimit} />
-                {/* <SliderPaginationController getArrayLimit={this.getArrayLimit} /> */}
+                <SliderPaginationController cardsData={cardsData} setActiveArray={this.setActiveArray} getActiveArray={this.getActiveArray}/>
             </div>
         )
     }
